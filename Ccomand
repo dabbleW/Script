@@ -1,0 +1,24 @@
+-- Nome do Indicador | Overlay 》 Indicador plotado sobre o gráfico?
+instrument { name = "Candles de Comando", short_name = "Ccomand", overlay = true, icon = "indicators:fractal" }
+
+-- Parâmetros configuráveis no painel do indicador
+up_color = input("Cor da Seta de Alta", "#FF7700") -- Cor da seta de alta
+down_color = input("Cor da Seta de Baixa", "#57A1DD") -- Cor da seta de baixa
+size = input("Tamanho das Setas", 1, { type = input.style, options = { 1, 2, 3 } }) -- Tamanho das setas
+up_symbol = input("Símbolo para Alta", "▲", { type = input.string }) -- Símbolo da seta para alta
+down_symbol = input("Símbolo para Baixa", "▼", { type = input.string }) -- Símbolo da seta para baixa
+
+-- Função principal
+function on_candle()
+    -- Verifica condição de alta sem pavio superior
+    if close == high and close > open then
+        -- Plotar seta de alta acima do candle
+        plot_shape(high, "Candle de Alta", shape_style.triangleup, size, up_color, shape_location.abovebar)
+    end
+
+    -- Verifica condição de baixa sem pavio inferior
+    if close == low and close < open then
+        -- Plotar seta de baixa abaixo do candle
+        plot_shape(low, "Candle de Baixa", shape_style.triangledown, size, down_color, shape_location.belowbar)
+    end
+end
